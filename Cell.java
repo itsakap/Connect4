@@ -1,7 +1,7 @@
 //Cell.java
 //Methods used by each individual cell.
 //A cell is one of the forty-two spaces playable in Connect 4.
-import java.awt.*;   
+import java.awt.*;
 
 public class Cell {
 
@@ -24,7 +24,7 @@ public class Cell {
 		occupied = false;
 		human = true;
 	}
-	//Initializer for BoardState Cells- DEEP COPY poopie
+	//Initializer for BoardState Cells
 	public Cell (Cell other){
 		this.myRow = other.myRow;
 		this.myColumn = other.myColumn;
@@ -60,7 +60,7 @@ public class Cell {
 			page.setColor(c);
 			page.fillOval(myX, myY, myWidth, myHeight);
 		}
-		
+
 		else {
 			page.setColor(Color.white);
 			page.fillRect(myX, myY, myWidth, myHeight);
@@ -92,4 +92,4 @@ public class Cell {
 	public boolean inHere(Point where){
 		return (where.x>myX && where.y >myY && where.x < myX+CELL_LENGTH && where.y<myY + CELL_LENGTH);
 	}
-} 
+}

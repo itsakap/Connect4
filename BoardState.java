@@ -1,7 +1,7 @@
 import java.util.*;
 public class BoardState  {
 	//Object class for Board State.
-	
+
 	//Instantiated column points to which column
 	//will be played for this board state.
 	private final int MAX_ROWS = 6;
@@ -15,19 +15,19 @@ public class BoardState  {
 	private Cell [][] segments;
 	private Cell[] moves; //to keep track of moves made for this BoardState
 	//BoardState constructor for board in UI
-	
-	
+
+
 	public BoardState(Cell[][]board){
 		myBoard = board;
 		moves = new Cell[MOVES];
 		segments = buildSegments();
 	}
 
-	//BoardState constructor. deep copy poopie
+	//BoardState constructor.
 	public BoardState(BoardState another,int column, boolean player){
 		myBoard = new Cell[MAX_ROWS][MAX_COLUMNS];
 		moves = new Cell[MOVES];
-		
+
 		for(int i = 0; i<MAX_ROWS;i++){
 			for(int j = 0; j<MAX_COLUMNS;j++){
 				myBoard[i][j]=new Cell(another.myBoard[i][j]);
@@ -66,7 +66,7 @@ public Cell[][] buildVertSegments(Cell[][]segs){
 return segs;
 }
 public Cell[][] buildDiagSegments(Cell[][]segs){
-	
+
 	int segNoCount = 45;
 	for (int aa=0;aa<3;aa++){
 		for(int bb=0;bb<4;bb++){
@@ -76,7 +76,7 @@ public Cell[][] buildDiagSegments(Cell[][]segs){
 			if(a==b){
 				segs[segNoCount][point]=myBoard[a+aa][b+bb];
 				point++;
-				
+
 			}
 				}
 			}
@@ -87,7 +87,7 @@ public Cell[][] buildDiagSegments(Cell[][]segs){
 			if(a+b==3){
 				segs[segNoCount][point]=myBoard[a+aa][b+bb];
 				point++;
-				
+
 			}
 		}
 	}
@@ -98,7 +98,7 @@ public Cell[][] buildDiagSegments(Cell[][]segs){
 	}
 
 public void addMove(Cell thisMove, int moveNo){
-	
+
 	moves[moveNo]=thisMove;//point to cell in board array
 	//moveNo++;//tick move number
 }
@@ -114,7 +114,7 @@ public boolean partOfAWin(Cell thisCell, boolean player){
 	for(int i=0;i<NUMBER_OF_SEGMENTS;i++)
 		for(int j = 0;j<SEGMENT_LENGTH;j++)
 			if(thisCell==segments[i][j])theseSegments.add(i);
-	
+
 	Iterator<Integer> ts = theseSegments.iterator();
 	while(ts.hasNext()){
 		int winCount=0;
@@ -123,7 +123,7 @@ public boolean partOfAWin(Cell thisCell, boolean player){
 			if((segments[i][j].isCellAlive() && segments[i][j].isHuman()==player))
 				winCount++;
 		if(winCount==3)return true;
-		} 
+		}
 	}
 	return false;
 }
@@ -138,7 +138,7 @@ public int maxDepthScore(){
 			if(segments[i][j].isCellAlive()){
 			 if (segments[i][j].isHuman()) redChips++; else blackChips++;
 			}
-		
+
 		if(redChips!=0&&blackChips==0)boardScore-=Math.pow(10, redChips);
 		else if(blackChips!=0&&redChips==0)boardScore+=Math.pow(10, blackChips);
 		else boardScore+=0;
@@ -150,7 +150,7 @@ public int maxDepthScore(){
 	public Cell[][] getMyBoard(){
 		return myBoard;
 	}
-	
+
 	//print cell info-- for testing
 	public void printCellStuff(){
 		System.out.println("HI! \n\n\n");
@@ -220,13 +220,13 @@ public int maxDepthScore(){
 	public boolean encounterNonPlayerCell(boolean player,int i,int j){
 		return(myBoard[i][j].getPlayer()!=player||!myBoard[i][j].isCellAlive());
 	}
-	
+
 	//Check to see if board is full by evaluating top row
 	//Used in evaluating if a game has ended in a draw.
 	public boolean isFull() {
-		for (int j = 0; j<MAX_COLUMNS; j++) 
+		for (int j = 0; j<MAX_COLUMNS; j++)
 			if(!myBoard[0][j].isCellAlive()) return false;
-			
+
 		return true;
 	}
 	//generates an array of Ints specifying columns this BoardState can act upon
@@ -253,5 +253,5 @@ public int maxDepthScore(){
 				if(myBoard[i][j].isCellAlive()) cellCount++;
 		return cellCount-1;
 			}
-	
+
 }
